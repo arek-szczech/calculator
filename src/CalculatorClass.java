@@ -15,10 +15,10 @@ public class CalculatorClass {
         return result;
     }
 
-    static float choiceFunction(int tryb, float in1, float in2)
+    static float choiceFunction(int mode, float in1, float in2)
     {
         float result;
-        switch (tryb)
+        switch (mode)
         {
             case 1:
               result = addFunction(in1, in2);
@@ -28,25 +28,25 @@ public class CalculatorClass {
                 break;
             default:
                 result = 0;
-                System.out.println("Zły numer działania: " + tryb);
+                System.out.println("Wrong number: " + mode);
         }
         return result;
     }
 
     public static void main(String[] args)
     {
-        System.out.println("Dodawanie - wybierz \"1\"" );
-        System.out.println("Odejmowanie - wybierz \"2\"" );
+        System.out.println("Addition - select \"1\"" );
+        System.out.println("Subtraction - select \"2\"" );
         Scanner myObj = new Scanner(System.in);
-        System.out.println("Podaj numer działania: " );
-        int tryb = myObj.nextInt();
+        System.out.println("Enter calc number: " );
+        int mode = myObj.nextInt();
 
-        System.out.println("Podaj pierwszą liczbę: " );
+        System.out.println("Enter first number: " );
         int in1 = myObj.nextInt();
-        System.out.println("Podaj drugą liczbę: " );
+        System.out.println("Enter second number: " );
         int in2 = myObj.nextInt();
 
-        float result = choiceFunction(tryb, in1, in2);
-        System.out.println("Wynik to: " + result);
+        float result = choiceFunction(mode, in1, in2);
+        System.out.println("The result is: " + result);
     }
 }
