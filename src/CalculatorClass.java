@@ -1,52 +1,73 @@
-/*This is my first program in Java. It's simply version of calculator.*/
+/*This is my first program in Java. It's a simple version of calculator.
+* Allows to add and subtract, for example:
+* 12+35-23+232=
+* without error handling, only Integer
+* */
 
 import java.util.Scanner;
+import java.util.ArrayList; // import the ArrayList class
+import java.lang.*;
+import java.lang.Math;
 
 public class CalculatorClass {
 
-    static float addFunction(float a, float b)
+    static int chooseOperation(char character)
     {
-        float result = a + b;
-        return result;
-    }
-    static float subFunction(float a, float b)
-    {
-        float result = a - b;
-        return result;
-    }
-
-    static float choiceFunction(int mode, float in1, float in2)
-    {
-        float result;
-        switch (mode)
-        {
-            case 1:
-              result = addFunction(in1, in2);
+        int out;
+        switch (character){
+            case '+':
+                out = 1;
                 break;
-            case 2:
-                result = subFunction(in1, in2);
+            case  '-':
+                out = -1;
                 break;
             default:
-                result = 0;
-                System.out.println("Wrong number: " + mode);
+                out = 0;
+                break;
         }
-        return result;
+        return out;
+    }
+
+    static int stringAnalysis(String str)
+    {
+        int tempIndex = 0;
+        int output = 0;
+        int tempNumber = 0;
+        ArrayList<Integer> numbers = new ArrayList<Integer>();
+        ArrayList<Integer> tempNumbers = new ArrayList<Integer>();
+        ArrayList<Character> characters = new ArrayList<Character>();
+
+        for (char ch : str.toCharArray()) {
+
+            if (Character.isDigit(ch)) {
+                tempIndex++;
+                tempNumbers.add(Character.getNumericValue(ch));
+            }
+            else {
+                for (int i = tempIndex; i>=1 ; i--) {
+                    tempNumber = tempNumber +  (int)Math.pow(10, i-1) * tempNumbers.get(tempIndex-i);
+                }
+                numbers.add(tempNumber);
+                tempNumber=0;
+                tempNumbers.clear();
+                tempIndex = 0;
+                characters.add(ch);
+            }
+        }
+        output = output + numbers.get(0);
+    for (int j = 1; j < numbers.size(); j++){
+    output = output + chooseOperation(characters.get(j-1)) * numbers.get(j);
+    }
+        return output;
     }
 
     public static void main(String[] args)
     {
-        System.out.println("Addition - select \"1\"" );
-        System.out.println("Subtraction - select \"2\"" );
         Scanner myObj = new Scanner(System.in);
-        System.out.println("Enter calc number: " );
-        int mode = myObj.nextInt();
+        System.out.println("Enter calc: " );
+        String input = myObj.nextLine();
 
-        System.out.println("Enter first number: " );
-        int in1 = myObj.nextInt();
-        System.out.println("Enter second number: " );
-        int in2 = myObj.nextInt();
-
-        float result = choiceFunction(mode, in1, in2);
-        System.out.println("The result is: " + result);
+       float result = stringAnalysis(input);
+       System.out.println(result);
     }
 }
